@@ -2,17 +2,14 @@ import sys
 from random import randint
 
 from PyQt5.QtGui import QPainter, QColor
-from PyQt5 import uic
+from UI import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
 
-class Circles(QMainWindow):
+class Circles(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
-        self.initUI()
-
-    def initUI(self):
+        self.setupUi(self)
         self.setWindowTitle('Git и желтые окружности')
         self.do_paint = False
         self.draw_btn.clicked.connect(self.paint)
@@ -29,9 +26,10 @@ class Circles(QMainWindow):
         self.repaint()
 
     def draw_circle(self, qp):
-        qp.setBrush(QColor(255, 200, 0))
         cnt = randint(3, 100)
         for i in range(cnt):
+            qp.setBrush(
+                QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
             x, y = randint(0, self.width()), randint(0, self.height())
             d = randint(5, 100)
             qp.drawEllipse(x, y, d, d)
